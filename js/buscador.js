@@ -185,4 +185,14 @@ function mostrarAutos(autos){
 
 function filtrarAuto(){
     //console.log('Desde filtrat Auto');
+    const resultado = obtenerAutos().filter(filtrarMarca);
+    console.log(resultado);
+}
+
+function filtrarMarca(auto){
+    if(datosBusqueda.marca){
+        return auto.marca === datosBusqueda.marca;
+    }else{
+
+    }
 }

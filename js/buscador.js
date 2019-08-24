@@ -215,13 +215,22 @@ color.addEventListener('input', e =>{
     filtrarAuto();
 });
 
-function mostrarAutos(autos){
+function limpiarHTML(){
     //Leer el elemento Resultado
     const contenedor = document.querySelector('#resultado');
 
+    //Limpiamos los resultados anteriores
     while( contenedor.firstChild){
         contenedor.removeChild(contenedor.firstChild);
     }
+}
+
+function mostrarAutos(autos){
+
+    limpiarHTML();
+
+    //Leer el elemento Resultado
+    const contenedor = document.querySelector('#resultado');
 
     autos.forEach(auto => {
         const autoHTML = document.createElement('p');
@@ -234,6 +243,15 @@ function mostrarAutos(autos){
     });
 }
 
+function noResultado(){
+    limpiarHTML();
+
+    const noResultado = document.createElement('div');
+    noResultado.classList.add('alerta', 'error');
+    noResultado.appendChild(document.createTextNode('No hay Resultados'));
+    document.querySelector('#resultado').appendChild(noResultado);
+}
+
 function filtrarAuto(){
     //console.log('Desde filtrat Auto');
     const resultado = obtenerAutos().filter(filtrarMarca).filter(filtrarYear)
@@ -243,7 +261,7 @@ function filtrarAuto(){
     if(resultado.length){
         mostrarAutos(resultado);
     }else{
-        alert('No hay resultados');
+        noResultado();
     }
 }
 

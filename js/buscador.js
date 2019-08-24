@@ -167,10 +167,22 @@ marca.addEventListener('input', e =>{
     //Mandar llamar la función de filtrar Autos
     filtrarAuto();
 });
+const year = document.querySelector('#year');
+year.addEventListener('input', e =>{
+    datosBusqueda.year = Number(e.target.value);
+
+    //Mandar llamar la función de filtrar Autos
+    filtrarAuto();
+});
+
 
 function mostrarAutos(autos){
     //Leer el elemento Resultado
     const contenedor = document.querySelector('#resultado');
+
+    while( contenedor.firstChild){
+        contenedor.removeChild(contenedor.firstChild);
+    }
 
     autos.forEach(auto => {
         const autoHTML = document.createElement('p');
@@ -185,14 +197,28 @@ function mostrarAutos(autos){
 
 function filtrarAuto(){
     //console.log('Desde filtrat Auto');
-    const resultado = obtenerAutos().filter(filtrarMarca);
-    console.log(resultado);
+    const resultado = obtenerAutos().filter(filtrarMarca).filter(filtrarYear);
+    //console.log(resultado);
+    if(resultado.length){
+        mostrarAutos(resultado);
+    }else{
+        alert('No hay resultados');
+    }
 }
 
 function filtrarMarca(auto){
     if(datosBusqueda.marca){
         return auto.marca === datosBusqueda.marca;
     }else{
-
+        return auto;
     }
 }
+
+function filtrarYear(auto){
+    if(datosBusqueda.year){
+        return auto.year === datosBusqueda.year;
+    }else{
+        return auto;
+    }
+}
+
